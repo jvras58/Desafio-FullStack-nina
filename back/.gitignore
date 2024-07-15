@@ -1,1 +1,71 @@
-__pycache__
+# Arquivos e diretórios específicos do Flask
+/__pycache__/
+/*.pyc
+/*.pyo
+/*.pyd
+
+# Banco de dados SQLite (substitua o nome do arquivo pelo seu, se necessário)
+/db.sqlite
+/db_testing.sqlite
+data*
+/data
+
+# Diretório virtualenv (se estiver usando um ambiente virtual)
+/venv/
+venv*
+
+# Arquivos e diretórios específicos do Visual Studio Code
+.vscode/
+*.code-workspace
+*.code-workspace-stored
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+*.suo
+*.user
+*.sln.docstates
+
+# Logs e arquivos temporários
+*.log
+*.pot
+*.bak
+*.tmp
+
+# Arquivos gerados automaticamente
+*.pyc
+__pycache__/
+*.db
+
+# Ambiente virtual Python (se você usa um ambiente virtual)
+/.env
+
+# Dependências Python (exclui o diretório, mas inclui o arquivo de requisitos)
+__pycache__/
+*.pyc
+*.pyo
+__pycache__/
+*.egg-info/
+dist/
+build/
+*.egg
+*.egg-info
+*.egg-info/
+MANIFEST
+
+# Arquivos de configuração sensíveis, como .env, .env.local, etc.
+.env
+.env.local
+.env.*.local
+.secrets.toml
+.tool-versions
+
+# Diretórios específicos do Flask a serem excluídos
+instance/
+migrations/
+
+# Arquivo de cobertura de código
+.coverage
+.pytest_cache/

@@ -1,7 +1,8 @@
-from .db_exceptions import MonthNumberException
-from datetime import datetime
 import json
 import os
+from datetime import datetime
+
+from .db_exceptions import MonthNumberException
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -73,7 +74,8 @@ class Database:
 
         try:
             month_name = months[month_num]
-        except:
+        # TODO: add keyerror exception no lugar de except
+        except KeyError:
             raise MonthNumberException("Month Number outside of range (1 .. 12).")
 
         return month_name

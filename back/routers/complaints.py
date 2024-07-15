@@ -1,16 +1,38 @@
-from back.schemas.complaints import ComplaintSchema, ComplaintList, ComplaintUserSchema, ComplaintUserList
-from back.schemas.group_bys import *
-from fastapi import APIRouter, HTTPException
-from back.database.database import client
+from datetime import datetime
 from http import HTTPStatus
+from typing import List
+import pytz
+from fastapi import APIRouter, HTTPException
+
+from back.database.database import client
+from back.schemas.complaints import ComplaintSchema, ComplaintUserList
+from back.schemas.group_bys import (GroupByAgeGroup, GroupByGenders,
+                                    GroupByMoment, GroupByMonths,
+                                    GroupByNeighborhoods, GroupByTypes)
 
 router = APIRouter(prefix='/complaints', tags=['complaints'])
 
-@router.get('/', response_model=ComplaintUserList)
-def get_complaints():
+utc=pytz.UTC
+
+@router.get("/", response_model=ComplaintUserList)
+def get_complaints(from_date: datetime, to_date: datetime):
+    """Retorna uma lista de reclamações filtradas por intervalo de datas."""
     complaints = client.get_complaints()
-    complaints.sort(key=lambda x: x['id'])
-    return {'complaints': complaints}
+    if not complaints:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND,
+            detail="No complaints found in the given date range.",
+        )
+
+    # FIXME: como estamos sem orm como o sqlalchemy não conseguimos fazer a query direto no banco tornando a busca ineficiente
+    if from_date and to_date:
+        filtered_complaints = [
+            complaint
+            for complaint in complaints
+            # FIXME complicado fazer a comparação de datas sem usar o utc localize pois não estão com dados timezone 100%
+            if utc.localize(from_date) <= utc.localize(datetime.strptime(complaint["date"], "%Y-%m-%dT%H:%M:%S")) <= utc.localize(to_date)
+        ]
+    return {'complaints': filtered_complaints}
 
 @router.get('/{complaint_id}', response_model=ComplaintSchema)
 def get_complaint(complaint_id: str):
