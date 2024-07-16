@@ -3,11 +3,10 @@ from http import HTTPStatus
 from dateutil.parser import parse
 from fastapi import APIRouter, HTTPException, Query
 
-from back.database.database import client
-from back.schemas.complaints import ComplaintList, ComplaintSchema, ComplaintUserList
-from back.schemas.group_bys import (GroupByAgeGroup, GroupByGenders,
-                                    GroupByMoment, GroupByMonths,
-                                    GroupByNeighborhoods, GroupByTypes)
+from database.database import client
+
+from app.api.schemas.complaints import ComplaintList, ComplaintSchema, ComplaintUserList
+from app.api.schemas.group_bys import GroupByAgeGroup, GroupByGenders, GroupByMoment, GroupByMonths, GroupByNeighborhoods, GroupByTypes
 
 router = APIRouter(prefix='/complaints', tags=['complaints'])
 
