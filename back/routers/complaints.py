@@ -3,9 +3,9 @@ from http import HTTPStatus
 from dateutil.parser import parse
 from fastapi import APIRouter, HTTPException, Query
 
-from back.database.database import client
-from back.schemas.complaints import ComplaintList, ComplaintSchema, ComplaintUserList
-from back.schemas.group_bys import (GroupByAgeGroup, GroupByGenders,
+from ..database.database import client
+from ..schemas.complaints import ComplaintList, ComplaintSchema, ComplaintUserList
+from ..schemas.group_bys import (GroupByAgeGroup, GroupByGenders,
                                     GroupByMoment, GroupByMonths,
                                     GroupByNeighborhoods, GroupByTypes)
 
