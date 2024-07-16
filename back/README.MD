@@ -134,7 +134,6 @@ make test
 
 > **Comentario 1:** Foi adicionado um parametro UserSchema opcional no schema de  complaints(reclamações) para que o response_model se adeque ao que foi solicitado
 
-> **Comentario 2:** talvez seja necessario refatorar para que a logica de junção complaint e usuário fiquem no proprio controller get_complaint
 
 
 ## Atividades Extras 
