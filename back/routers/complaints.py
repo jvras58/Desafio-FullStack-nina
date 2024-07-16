@@ -1,6 +1,6 @@
 from datetime import datetime
 from http import HTTPStatus
-from typing import List
+from dateutil.parser import parse
 import pytz
 from fastapi import APIRouter, HTTPException
 
@@ -24,14 +24,21 @@ def get_complaints(from_date: datetime, to_date: datetime):
             detail="No complaints found in the given date range.",
         )
 
-    # FIXME: como estamos sem orm como o sqlalchemy não conseguimos fazer a query direto no banco tornando a busca ineficiente
-    if from_date and to_date:
-        filtered_complaints = [
-            complaint
-            for complaint in complaints
-            # FIXME complicado fazer a comparação de datas sem usar o utc localize pois não estão com dados timezone 100%
-            if utc.localize(from_date) <= utc.localize(datetime.strptime(complaint["date"], "%Y-%m-%dT%H:%M:%S")) <= utc.localize(to_date)
-        ]
+    filtered_complaints = []
+
+    try:
+        # # FIXME: como estamos sem orm como o sqlalchemy não conseguimos fazer a query com orm no banco tornando a busca ineficiente e pesada
+        for complaint in complaints:
+            # converte o campo date para datetime usando o parse
+            complaint_date = parse(complaint["date"])
+            if from_date <= complaint_date <= to_date:
+                filtered_complaints.append(complaint)
+    except Exception as e:
+        raise HTTPException(
+            status_code=HTTPStatus.BAD_REQUEST,
+            detail=f"Error processing dates: {str(e)}"
+        )
+
     return {'complaints': filtered_complaints}
 
 @router.get('/{complaint_id}', response_model=ComplaintSchema)
