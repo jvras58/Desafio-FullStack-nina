@@ -34,10 +34,8 @@ def get_complaint(complaint_id: str):
     if complaint is None:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Complaint not found.")
 
-    # Recupera as informações do usuário associado à complaint
     user = client.get_user(complaint["user_id"])
 
-    # Inclui as informações do usuário no objeto de complaint
     if user:
         complaint['User'] = user
 
