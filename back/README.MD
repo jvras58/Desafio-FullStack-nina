@@ -1,0 +1,145 @@
+<p align="center">
+    <img src="https://pbs.twimg.com/profile_images/575314188848889856/F4KWmvVX_200x200.png" alt="Header - complaints">
+</p>
+<p align="center">
+    complaints
+</p>
+
+## Sobre o projeto
+O projeto visa desenvolver um sistema integrado para a gestão de reclamações(complaints)
+
+## Stack do projeto
+
+Este projeto é uma applicação web que implementa uma API REST usando o framework FastAPI sem banco de dados real.
+
+Essas e outras libs e tecnologias usadas neste projeto são:
+|  Lib      | Versão    |
+|-----------|-----------|
+| **Runtime**           |
+| Python    | v3.11.x   |
+| FastAPI   | v0.111.x  |
+| Uvicorn   | v.0.29.x  |
+| Pydantic  | v2.7.x    |
+| **Devtime**           |
+| Pytest                        | v8.2.x    |
+| Pytest Coverage (pytest-cov)  | v5.0.x    |
+
+
+### Organização do projeto
+```
+├─📁 Desafio-FullStack-nina
+/
+├─📁 back             ->  [Implementação da API]
+│   ├─🐍 app.py     ->  [Entrypoint da aplicação]
+│   ├─📁 routers            ->  [rotas da aplicação]
+│   │ │ ├─🐍 complaints.py
+│   │ │ ├─🐍 users.py
+│   │   ...
+│   └─📁 schema    ->  [schemas da aplicação]
+│   │ │ ├─🐍 complaints.py
+│   │ │ ├─🐍 users.py
+│   │   ...
+│   └─📁 database      ->  [configurações dos dados da aplicação]
+│   │ │ ├─🐍 database.py
+│   │ │ ├─🐍 db_exception.py
+│   │ │ ├─🐍 generate_mocked_data.py
+│   │ │ ├─{...} mocked_exemple.json
+│        ...
+├─📁 tests           ->  [Testes da aplicação]
+│   ├─🐍 conftest.py ->  [configuração do ambiente de testes.]
+│   ├─🐍 test_nome-modulo.py ->  [nomeclatura dos testes pytest.]
+│                     
+├─📄 .gitignore
+├─📄 requirements.txt  ->  [Definições para o projeto]
+├─📄 README.md
+
+```
+
+## Rodando a API
+
+Este repositório está organizado para rodar com Docker ou localmente. Para iniciar, siga as seguintes configurações:
+
+### Configurações Locais
+
+Este projeto utiliza o pip para gerenciar as dependências definidas no arquivo `requirements.txt`.
+
+crie o ambiente virtual executando (caso esteja dentro da pasta back):
+```sh
+python3 -m venv venv
+```
+
+ative o ambiente virtual executando (caso esteja dentro da pasta back):
+```sh
+source venv/bin/activate
+```
+
+Para instalar as dependências, utilize o comando (caso esteja dentro da pasta back):
+```sh
+pip install -r requirements.txt
+```
+
+
+Após isso, o projeto estará pronto para ser iniciado com o comando:
+```sh
+make run 
+```
+
+<!-- FIXME: AINDA É NECESSARIO IMPLEMENTAR O dockerfile do back e front e o compose para rodar os dois -->
+<!-- FIXME: AINDA É NECESSARIO IMPLEMENTAR O MAKE -->
+### Configurações com Docker (volte para pasta principal [Desafio-FullStack-nina] )
+
+É obrigatório ter o Docker Engine já instalado e configurado. Para mais informações de como instalar o Docker Engine em seu sistema operacional, consulte:
+
+- [Instruções para instalação do Docker Engine](https://docs.docker.com/engine/install/)
+
+#### Principais Comandos
+
+##### Subir o Compose
+
+```sh
+docker compose up
+```
+
+##### Executar as Migrações do Alembic
+> **Nota:** Para entrar em um container Docker de forma interativa, você pode usar o seguinte comando:
+```sh
+docker exec -it <nome_container> /bin/bash
+```
+
+Dentro do container, execute:
+
+##### Executar Testes
+```sh
+make test
+```
+
+# Lista de Atividades 
+
+## Atividades Pendentes Backend
+- [ ] Implementar um recurso ausente que retorne todas as reclamações de um determinado usuário.
+
+
+## Atividades Concluídas Backend
+- [v] Implementar uma funcionalidade de filtragem para a rota get_complaints (```/complaints```) permitindo que ela retorne apenas as reclamações onde o campo ```date``` está entre os campos ```from_date``` e `` `to_date```, passado através de parâmetros de consulta.
+> **Nota:** será necessário para integração com a tabela de complaints(reclamações) no frontend
+
+> **Comentario 1:** Como estamos trabalhando em memoria e a quantidade de dados é pequena algumas implementações são rapidas pela definição de responsabilidades e durabilidade dos dados guardar coisas em memória não é uma boa coisa pois depende que a aplicação fique 100% ligada para que um post dure por exemplo.
+
+> **Comentario 2:** Foi detectado um warning ao rodar a aplicação fastapi (UserWarning: Valid config keys have changed) solicitando a troca da nomeclatura (allow_population_by_field_name) para populate_by_name
+
+> **Comentario 3:** Foi detectado um uso Deprecated(relacionado ao uso de configurações baseadas em classes) no schema de pydantic na hora de rodar os testes e esse warning se encontra no group_bys schema
+
+- [v] Refatore a rota get_complaint (```/complaint/{complaint_id}```) para que a reclamação retornada inclua informações sobre o usuário que a registrou. 
+> **Nota:** será necessário para integração com a tabela de complaints(reclamações) no frontend
+
+> **Comentario:** Foi adicionado um parametro UserSchema opcional no schema de  complaints(reclamações) para que o response_model se adeque ao que foi solicitado
+
+
+
+## Atividades Extras 
+
+- [ ] Dockerfile
+
+- [v] testes back-end (usando pytest)
+
+- [ ] adicionar o coverage (pytest-cov)
