@@ -132,7 +132,7 @@ make test
 - [v] Refatore a rota get_complaint (```/complaint/{complaint_id}```) para que a reclamação retornada inclua informações sobre o usuário que a registrou. 
 > **Nota:** será necessário para integração com a tabela de complaints(reclamações) no frontend
 
-> **Comentario:** Foi adicionado um parametro UserSchema opcional no schema de  complaints(reclamações) para que o response_model se adeque ao que foi solicitado
+> **Comentario 1:** Foi adicionado um parametro UserSchema opcional no schema de  complaints(reclamações) para que o response_model se adeque ao que foi solicitado
 
 
 

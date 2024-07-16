@@ -60,3 +60,24 @@ def test_get_complaint_not_found(client):
     response = client.get(f"/complaints/{complaint_id}")
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert response.json() == {"detail": "Complaint not found."}
+
+def test_get_complaints_from_user_ok(client):
+    """Testa a obtenção de reclamações de um usuário específico."""
+
+    user_id = "668c36d5e3872b4344d4b38b"
+    response = client.get(f"/complaints/user/{user_id}")
+    assert response.status_code == HTTPStatus.OK
+    complaints = response.json().get('complaints', [])
+    assert complaints
+    for complaint in complaints:
+        assert 'user_id' in complaint
+        assert 'neighborhood' in complaint
+        assert 'description' in complaint
+
+def test_get_complaints_from_user_not_found(client):
+    """Testa a obtenção de reclamações de um usuário específico que não existe."""
+
+    user_id = "XXX"
+    response = client.get(f"/complaints/user/{user_id}")
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.json() == {"detail": "User not found."}

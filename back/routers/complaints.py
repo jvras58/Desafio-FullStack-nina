@@ -4,7 +4,7 @@ from dateutil.parser import parse
 from fastapi import APIRouter, HTTPException, Query
 
 from back.database.database import client
-from back.schemas.complaints import ComplaintSchema, ComplaintUserList
+from back.schemas.complaints import ComplaintList, ComplaintSchema, ComplaintUserList
 from back.schemas.group_bys import (GroupByAgeGroup, GroupByGenders,
                                     GroupByMoment, GroupByMonths,
                                     GroupByNeighborhoods, GroupByTypes)
@@ -43,9 +43,18 @@ def get_complaint(complaint_id: str):
 
     return complaint
 
-# @router.get('/user/{user_id}', response_model=ComplaintList)
-# def get_complaints_from_user(user_id: str):
-#     # Implement your function here!
+@router.get('/user/{user_id}', response_model=ComplaintList)
+def get_complaints_from_user(user_id: str):
+    user = client.get_user(user_id)
+    if user is None:
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="User not found.")
+    
+    complaints = client.get_complaints()
+    user_complaints = [
+        complaint for complaint in complaints
+        if complaint["user_id"] == user_id
+    ]
+    return {"complaints": user_complaints}
 
 @router.get('/group/types', response_model=GroupByTypes)
 def get_complaints_group_by_types():
