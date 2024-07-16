@@ -39,5 +39,8 @@
     "explorer.compactFolders": false,
     "python.analysis.diagnosticSeverityOverrides": {
         "reportInvalidTypeForm": false
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
     }
 }

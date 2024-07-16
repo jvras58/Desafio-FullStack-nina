@@ -33,3 +33,30 @@ def test_get_complaints_unprocess(client):
     response = client.get(f"/complaints?from_date={from_date}&to_date={to_date}")
     assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY 
     assert "detail" in response.json()
+
+def test_get_complaint_ok(client):
+    """Testa a obtenção de uma reclamação específica e as informações do usuário associado a ela."""
+
+    complaint_id = "668c36d8e3872b4344d4b38c"
+    response = client.get(f"/complaints/{complaint_id}")
+    assert response.status_code == HTTPStatus.OK
+    complaint = response.json()
+    assert complaint['id'] == complaint_id
+    # Complaint fields
+    assert 'user_id' in complaint
+    assert 'neighborhood' in complaint
+    assert 'description' in complaint
+    # User fields
+    user = complaint.get('User', {})
+    assert 'id' in user
+    assert 'name' in user
+    assert 'email' in user
+
+
+def test_get_complaint_not_found(client):
+    """Testa a obtenção de uma reclamação específica que não existe."""
+    
+    complaint_id = "456"
+    response = client.get(f"/complaints/{complaint_id}")
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.json() == {"detail": "Complaint not found."}

@@ -21,17 +21,25 @@ def get_complaints(
 
     complaints = client.get_complaints()
 
-    # TODO: como estamos trabalhando em memoria com volume de dados pequeno, podemos fazer a filtragem aqui pela durabilidade e responsabilidade um banco de dados seria o natural
     filtered_complaints = list(filter(lambda complaint: from_date <= parse(complaint["date"]) <= to_date, complaints))
 
     return {'complaints': filtered_complaints}
 
 @router.get('/{complaint_id}', response_model=ComplaintSchema)
 def get_complaint(complaint_id: str):
+    """Retorna uma reclamação específica e as informações do usuário associado a ela."""
+
     complaint = client.get_complaint(complaint_id)
     
     if complaint is None:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Complaint not found.")
+
+    # Recupera as informações do usuário associado à complaint
+    user = client.get_user(complaint["user_id"])
+
+    # Inclui as informações do usuário no objeto de complaint
+    if user:
+        complaint['User'] = user
 
     return complaint
 
