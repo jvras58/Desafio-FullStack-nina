@@ -1,8 +1,7 @@
 from datetime import datetime
 from http import HTTPStatus
 from dateutil.parser import parse
-import pytz
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 
 from back.database.database import client
 from back.schemas.complaints import ComplaintSchema, ComplaintUserList
@@ -12,32 +11,18 @@ from back.schemas.group_bys import (GroupByAgeGroup, GroupByGenders,
 
 router = APIRouter(prefix='/complaints', tags=['complaints'])
 
-utc=pytz.UTC
+
 
 @router.get("/", response_model=ComplaintUserList)
-def get_complaints(from_date: datetime, to_date: datetime):
+def get_complaints(
+    from_date: datetime= Query(..., description="Data de início em YYYY-MM-DD format"), 
+    to_date: datetime = Query(..., description="Data de término em YYYY-MM-DD format")):
     """Retorna uma lista de reclamações filtradas por intervalo de datas."""
+
     complaints = client.get_complaints()
-    if not complaints:
-        raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND,
-            detail="No complaints found in the given date range.",
-        )
 
-    filtered_complaints = []
-
-    try:
-        # # FIXME: como estamos sem orm como o sqlalchemy não conseguimos fazer a query com orm no banco tornando a busca ineficiente e pesada
-        for complaint in complaints:
-            # converte o campo date para datetime usando o parse
-            complaint_date = parse(complaint["date"])
-            if from_date <= complaint_date <= to_date:
-                filtered_complaints.append(complaint)
-    except Exception as e:
-        raise HTTPException(
-            status_code=HTTPStatus.BAD_REQUEST,
-            detail=f"Error processing dates: {str(e)}"
-        )
+    # TODO: como estamos trabalhando em memoria com volume de dados pequeno, podemos fazer a filtragem aqui pela durabilidade e responsabilidade um banco de dados seria o natural
+    filtered_complaints = list(filter(lambda complaint: from_date <= parse(complaint["date"]) <= to_date, complaints))
 
     return {'complaints': filtered_complaints}
 
