@@ -142,4 +142,25 @@ make test
 
 - [v] testes back-end (usando pytest)
 
+> **Comentario 1:** Foi necessario criar um arquivo pyproject.toml com especificações do patch do python para que o pytest fosse configurado corretamente a lida-se com os testes
+
+> **Comentario 2:** complementando o comentario 1 redesenhei a arquitetura do back end para parecer um projeto fastapi e os testes funcionassem onde temos uma pasta organizada assim:
+├─📁 back
+│   ├─🐍 main.py     ->  [Entrypoint da aplicação]
+  ├ ├─📁 api             ->  [Implementação da API]
+  ├ │  │   ├─📁 routers      ->  [Implementação da API]
+  │ │  │ │ ├─🐍 complaints.py
+  │ │  │ │ ├─🐍 users.py
+  │ │  │    ...
+  │ │  │  
+  │ │  └─📁 schema    ->  [schemas da aplicação]
+  │ │       ├─🐍 complaints.py
+  │ │       ├─🐍 users.py
+  │ │        ...
+  ├ ├─📁 database          ->  [configurações dos dados da aplicação]
+          ...
+
+
+> **Comentario 3:** investigar o porque o 'fastapi dev main.py' parou de funcionar
+
 - [ ] adicionar o coverage (pytest-cov)

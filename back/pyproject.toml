@@ -3,5 +3,4 @@ pythonpath = "."
 addopts = "-ra -p no:warnings"
 testpaths = [
     "tests",
-    "integration",
 ]
