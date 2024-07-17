@@ -110,7 +110,7 @@ class Database:
         return None
     
     def group_by(self, complaint_key: str):
-        """ Groups the number of complaints by each value of given key. """
+        """ Agrupa o número de reclamações por cada valor de determinada chave. """
         grouped_data = {}
         complaints = self.get_complaints()
         for complaint in complaints:
@@ -120,7 +120,7 @@ class Database:
         return grouped_data
     
     def group_by_month(self):
-        """ Groups the number of complaints by each month. """
+        """ Agrupa o número de reclamações por mês. """
         grouped_data = {}
         complaints = self.get_complaints()
         for complaint in complaints:
@@ -132,7 +132,7 @@ class Database:
         return grouped_data
     
     def group_by_age_group(self):
-        """ Groups the number of complaints by age groups. """
+        """ Agrupa o número de reclamações por faixas etárias. """
         grouped_data = {}
         complaints = self.get_complaints()
         for complaint in complaints:
