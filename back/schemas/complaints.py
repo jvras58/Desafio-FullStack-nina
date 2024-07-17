@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-from back.schemas.users import UserSchema
+from schemas.users import UserSchema
 
 class ComplaintSchema(BaseModel):
     id: str
