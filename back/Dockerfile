@@ -1,14 +1,23 @@
-FROM python:3.11-slim
+FROM python:3.11-slim as backend
+
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
 COPY . .
 
+# Instala todas as dependências
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Define o PYTHONPATH
+ENV PYTHONPATH=$PYTHONPATH:/app
+
+# Executa os testes
+RUN pytest
 
 EXPOSE 8000
 
-CMD ["fastapi", "dev", "app.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 
 # docker build -t api-complaints .  

@@ -1,4 +1,4 @@
-from .routers import users, complaints
+from routers import users, complaints
 from fastapi import FastAPI
 from http import HTTPStatus
 from fastapi.middleware.cors import CORSMiddleware

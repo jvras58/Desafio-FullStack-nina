@@ -141,5 +141,6 @@ make test
 - [ ] Dockerfile
 
 - [v] testes back-end (usando pytest)
+> **Nota de Implementação:** Durante o desenvolvimento, infrentei um desafio relacionado à configuração do ambiente de desenvolvimento com FastAPI. A execução do servidor de desenvolvimento utilizando o comando `fastapi dev app.py` ou `fastapi dev back/app.py` resultava em impossibilidade na execução dos testes do pytest. Isso ocorreu porque o comando `fastapi dev` exige que os caminhos dos módulos sejam especificados de uma forma (por exemplo, `from back.router import users, complaints`), enquanto o `pytest` requer uma estrutura de importação diferente (ou seja, `from routers import users, complaints`). Para resolver essa incompatibilidade e garantir a integridade dos testes, optamos por utilizar o `uvicorn` para iniciar o servidor de desenvolvimento, com o comando `uvicorn app:app --reload --host 0.0.0.0`. Essa abordagem me permitiu manter os testes enquanto desenvolvíamos com FastAPI.
 
 - [ ] adicionar o coverage (pytest-cov)
