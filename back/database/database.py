@@ -12,7 +12,9 @@ COMPLAINTS_FILE_PATH = os.path.join(__location__, "mocked_complaints_data.json")
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 class Database:
+    """ Classe que simula um banco de dados. """
     def __init__(self) -> None:
+        """ Inicializa o banco de dados com os dados dos arquivos JSON."""
         self.users = []
         with open(USERS_FILE_PATH, 'r') as file:
             self.users = json.load(file)
@@ -22,12 +24,13 @@ class Database:
             self.complaints = json.load(file)
 
     def _increment_count(self, d: dict, key: str):
+        """ Incrementa o valor de uma chave em um dicionário. """
         if key not in d:
             d[key] = 0
         d[key] += 1
 
     def _get_age(self, birthdate: datetime):
-        """ Returns an age in years based on the birthdate and the current date. """
+        """ Retorna uma idade em anos com base na data de nascimento e na data atual. """
         today = datetime.today()
         age = today.year - birthdate.year
         if (today.month, today.day) < (birthdate.month, birthdate.day):
@@ -35,7 +38,7 @@ class Database:
         return age
 
     def _get_age_group(self, birthdate: datetime):
-        """ Returns a string representing an age_group based on the birthdate. """
+        """ Retorna uma string representando um age_group com base na data de nascimento. """
         age = self._get_age(birthdate)
         
         if age < 14:
@@ -53,10 +56,11 @@ class Database:
         return "> 60"
     
     def _get_date_elements(self, d: datetime):
-        """ Returns day, month and year from a datetime object as int values. """
+        """ Retorna dia, mês e ano de um objeto datetime como valores int. """
         return d.day, d.month, d.year
     
-    def _translate_month_int_to_name(self, month_num: int):
+    def _translate_month_int_to_name(self, month_num: int)-> str:
+        """Retorna o nome de um mês com base em seu número. """
         months = {
             1: "Jan",
             2: "Fev",
@@ -84,6 +88,7 @@ class Database:
         pass
 
     def get_complaints(self):
+        """ Retorna uma lista de reclamações."""
         complaints_with_user_data = []
         users = { user['id']: user for user in self.users }
         
@@ -99,14 +104,14 @@ class Database:
         return complaints_with_user_data
 
     def get_complaint(self, _id: str = None):
-        # TODO Implement a way to add the user data to the complaint,
-        # using the fields "complaint.user_id" and "user.id".
-        # Some functions won't work without this.
-        # Hint: Pay attention to the schemas when returning!
-
+        """ Retorna uma reclamação específica e as informações do usuário associado a ela."""
         result = list(filter(lambda x: x['id'] == _id, self.complaints))
         if len(result) > 0:
-            return result[0]
+            complaint = result[0]
+            user = self.get_user(complaint["user_id"])
+            if user:
+                complaint['User'] = user
+            return complaint
         return None
     
     def group_by(self, complaint_key: str):

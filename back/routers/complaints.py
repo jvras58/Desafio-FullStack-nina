@@ -1,13 +1,13 @@
 from datetime import datetime
 from http import HTTPStatus
+from database.database import client
 from dateutil.parser import parse
 from fastapi import APIRouter, HTTPException, Query
-
-from database.database import client
-from schemas.complaints import ComplaintList, ComplaintSchema, ComplaintUserList
-from schemas.group_bys import (GroupByAgeGroup, GroupByGenders,
-                                    GroupByMoment, GroupByMonths,
-                                    GroupByNeighborhoods, GroupByTypes)
+from schemas.complaints import (ComplaintList, ComplaintSchema,
+                                ComplaintUserList)
+from schemas.group_bys import (GroupByAgeGroup, GroupByGenders, GroupByMoment,
+                               GroupByMonths, GroupByNeighborhoods,
+                               GroupByTypes)
 
 router = APIRouter(prefix='/complaints', tags=['complaints'])
 
@@ -15,12 +15,14 @@ router = APIRouter(prefix='/complaints', tags=['complaints'])
 
 @router.get("/", response_model=ComplaintUserList)
 def get_complaints(
-    from_date: datetime= Query(..., description="Data de início em YYYY-MM-DD format"), 
-    to_date: datetime = Query(..., description="Data de término em YYYY-MM-DD format")):
+    from_date: datetime= Query(..., description="Data de início em YYYY-MM-DD-TT format"), 
+    to_date: datetime = Query(..., description="Data de término em YYYY-MM-DD-TT format"),
+    skip: int = 0, limit: int = 10
+    ):
     """Retorna uma lista de reclamações filtradas por intervalo de datas."""
 
     complaints = client.get_complaints()
-
+    complaints = complaints[skip:skip+limit]
     filtered_complaints = list(filter(lambda complaint: from_date <= parse(complaint["date"]) <= to_date, complaints))
 
     return {'complaints': filtered_complaints}
@@ -34,13 +36,9 @@ def get_complaint(complaint_id: str):
     if complaint is None:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Complaint not found.")
 
-    user = client.get_user(complaint["user_id"])
-
-    if user:
-        complaint['User'] = user
-
     return complaint
 
+# TODO: NÃO ira ser usada no front-end
 @router.get('/user/{user_id}', response_model=ComplaintList)
 def get_complaints_from_user(user_id: str):
     """Retorna uma lista de reclamações de um usuário específico."""
