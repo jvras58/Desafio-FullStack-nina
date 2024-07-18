@@ -36,13 +36,9 @@ def get_complaint(complaint_id: str):
     if complaint is None:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Complaint not found.")
 
-    user = client.get_user(complaint["user_id"])
-
-    if user:
-        complaint['User'] = user
-
     return complaint
 
+# TODO: NÃO ira ser usada no front-end
 @router.get('/user/{user_id}', response_model=ComplaintList)
 def get_complaints_from_user(user_id: str):
     """Retorna uma lista de reclamações de um usuário específico."""
