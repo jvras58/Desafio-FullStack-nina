@@ -23,7 +23,7 @@ def test_get_complaints_not_found(client):
     to_date = "2024-05-27T15:45:13"
     response = client.get(f"/complaints?from_date={from_date}&to_date={to_date}")
     assert response.status_code == HTTPStatus.OK
-    assert response.json() == {"complaints": []}
+    assert response.json().get("complaints") == []
 
 def test_get_complaints_unprocess(client):
     """Testa a obtenção de reclamações dentro de um intervalo de datas invalido."""

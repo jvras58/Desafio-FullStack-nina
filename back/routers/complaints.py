@@ -1,5 +1,7 @@
 from datetime import datetime
 from http import HTTPStatus
+from typing import Optional
+
 from database.database import client
 from dateutil.parser import parse
 from fastapi import APIRouter, HTTPException, Query
@@ -15,17 +17,28 @@ router = APIRouter(prefix='/complaints', tags=['complaints'])
 
 @router.get("/", response_model=ComplaintUserList)
 def get_complaints(
-    from_date: datetime= Query(..., description="Data de início em YYYY-MM-DD-TT format"), 
-    to_date: datetime = Query(..., description="Data de término em YYYY-MM-DD-TT format"),
-    skip: int = 0, limit: int = 100
+    from_date: Optional[datetime]= Query(..., description="Data de início em YYYY-MM-DD-TT format"), 
+    to_date: Optional[datetime] = Query(..., description="Data de término em YYYY-MM-DD-TT format"),
+    skip: int = 0, limit: int = 10
     ):
     """Retorna uma lista de reclamações filtradas por intervalo de datas."""
 
     complaints = client.get_complaints()
-    complaints = complaints[skip:skip+limit]
-    filtered_complaints = list(filter(lambda complaint: from_date <= parse(complaint["date"]) <= to_date, complaints))
+    filtered_complaints = list(filter(lambda complaint: from_date <= parse(complaint["date"]) <= to_date, complaints))    
+    complaints = filtered_complaints[skip:skip+limit]
+    hasNextPage = True if len(filtered_complaints) - skip > limit else False
+    hasPreviousPage = True if skip > 0 else False
 
-    return {'complaints': filtered_complaints}
+    if not hasNextPage and not hasPreviousPage:
+        return {"complaints": complaints}
+
+    return {
+        "complaints": complaints,
+        "hasNextPage": hasNextPage,
+        "hasPreviousPage": hasPreviousPage,
+        "quantity": len(filtered_complaints),
+    }
+
 
 @router.get('/{complaint_id}', response_model=ComplaintSchema)
 def get_complaint(complaint_id: str):
@@ -98,5 +111,12 @@ def get_complaints_group_by_neighborhoods():
 
     if len(output) == 0:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="No neighborhoods found.")
+
+    return output
+
+    if len(output) == 0:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND, detail="No neighborhoods found."
+        )
 
     return output
