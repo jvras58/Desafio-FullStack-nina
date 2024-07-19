@@ -41,3 +41,5 @@ class ComplaintUserSchema(BaseModel):
 
 class ComplaintUserList(BaseModel):
     complaints: list[ComplaintUserSchema]
+    hasNextPage: bool
+    hasPreviousPage: bool
