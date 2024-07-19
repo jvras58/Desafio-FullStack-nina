@@ -47,7 +47,7 @@ def get_complaints(
     return {
         "complaints": complaints,
         "total_pages": total_pages,
-        "quantity": len(filtered_complaints),
+        "total": len(filtered_complaints),
     }
 
 

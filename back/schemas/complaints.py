@@ -42,4 +42,4 @@ class ComplaintUserSchema(BaseModel):
 class ComplaintUserList(BaseModel):
     complaints: list[ComplaintUserSchema]
     total_pages: int | None = None
-    quantity: int | None = None
+    total: int | None = None
