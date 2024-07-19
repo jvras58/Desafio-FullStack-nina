@@ -17,7 +17,7 @@ router = APIRouter(prefix='/complaints', tags=['complaints'])
 def get_complaints(
     from_date: datetime= Query(..., description="Data de início em YYYY-MM-DD-TT format"), 
     to_date: datetime = Query(..., description="Data de término em YYYY-MM-DD-TT format"),
-    skip: int = 0, limit: int = 10
+    skip: int = 0, limit: int = 100
     ):
     """Retorna uma lista de reclamações filtradas por intervalo de datas."""
 
