@@ -4,7 +4,7 @@ from typing import Optional
 
 from database.database import client
 from dateutil.parser import parse
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException
 from schemas.complaints import (ComplaintList, ComplaintSchema,
                                 ComplaintUserList)
 from schemas.group_bys import (GroupByAgeGroup, GroupByGenders, GroupByMoment,
@@ -22,12 +22,18 @@ def get_complaints(
     skip: int = 0, limit: int = 10
     ):
     """Retorna uma lista de reclamações filtradas por intervalo de datas."""
-
+    filtered_complaints = []
     complaints = client.get_complaints()
-    filtered_complaints = list(filter(lambda complaint: from_date <= parse(complaint["date"]) <= to_date, complaints))    
-    complaints = filtered_complaints[skip:skip+limit]
-    hasNextPage = True if len(filtered_complaints) - skip > limit else False
-    hasPreviousPage = True if skip > 0 else False
+    if (from_date and to_date):
+        filtered_complaints = list(filter(lambda complaint: from_date <= parse(complaint["date"]) <= to_date, complaints))    
+        complaints = filtered_complaints[skip:skip+limit]
+        hasNextPage = True if len(filtered_complaints) - skip > limit else False
+        hasPreviousPage = True if skip > 0 else False
+    else:
+        paginatedComplaints = complaints[skip:skip+limit]
+        hasNextPage = True if len(complaints) - skip > limit else False
+        hasPreviousPage = True if skip > 0 else False
+        filtered_complaints = paginatedComplaints
 
     if not hasNextPage and not hasPreviousPage:
         return {"complaints": complaints}
