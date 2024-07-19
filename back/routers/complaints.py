@@ -21,27 +21,32 @@ def get_complaints(
     to_date: Optional[datetime] = None,
     skip: int = 0, limit: int = 10
     ):
-    """Retorna uma lista de reclamações filtradas por intervalo de datas."""
+    """
+    Retorna uma lista de reclamações filtradas por intervalo de datas.
+
+    Parâmetros:
+    - from_date (datetime): Data de início do intervalo de filtragem (opcional).
+    - to_date (datetime): Data de fim do intervalo de filtragem (opcional).
+    - skip (int): Número de registros a serem ignorados (padrão: 0).
+    - limit (int): Número máximo de registros a serem retornados (padrão: 10).
+
+    Retorna:
+    Um dicionário contendo as reclamações filtradas, o número total de páginas e a quantidade de reclamações filtradas.
+    """
     filtered_complaints = []
     complaints = client.get_complaints()
     if (from_date and to_date):
         filtered_complaints = list(filter(lambda complaint: from_date <= parse(complaint["date"]) <= to_date, complaints))    
         complaints = filtered_complaints[skip:skip+limit]
-        hasNextPage = True if len(filtered_complaints) - skip > limit else False
-        hasPreviousPage = True if skip > 0 else False
+        total_pages = len(filtered_complaints)// limit
     else:
         paginatedComplaints = complaints[skip:skip+limit]
-        hasNextPage = True if len(complaints) - skip > limit else False
-        hasPreviousPage = True if skip > 0 else False
         filtered_complaints = paginatedComplaints
-
-    if not hasNextPage and not hasPreviousPage:
-        return {"complaints": complaints}
+        total_pages = len(complaints) // limit
 
     return {
         "complaints": complaints,
-        "hasNextPage": hasNextPage,
-        "hasPreviousPage": hasPreviousPage,
+        "total_pages": total_pages,
         "quantity": len(filtered_complaints),
     }
 
