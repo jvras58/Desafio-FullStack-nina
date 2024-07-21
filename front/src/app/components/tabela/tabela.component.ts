@@ -6,13 +6,15 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { format, parseISO } from 'date-fns';
 import { NgForOf } from '@angular/common';
+import { AgeRangeChartComponent } from "../age-range-chart/age-range-chart.component";
+import { DashboardComponent } from "../dashboard/dashboard.component";
 
 @Component({
   selector: 'app-tabela',
   standalone: true,
   templateUrl: './tabela.component.html',
   styleUrls: ['./tabela.component.scss'],
-  imports: [FormsModule, CommonModule, NgForOf],
+  imports: [FormsModule, CommonModule, NgForOf, AgeRangeChartComponent, DashboardComponent],
   styles: [`
     :host ::ng-deep .table td { vertical-align: top; padding: 0.5rem; }
   `],
