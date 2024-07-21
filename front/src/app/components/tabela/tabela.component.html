@@ -1,0 +1,68 @@
+<div class="container mx-auto px-5 py-5 max-w-6xl font-sans">
+  <h1 class="text-2xl mb-5">Ocorrências</h1>
+
+  <div class="flex items-center mb-5">
+    <label for="dateRange" class="mr-2 font-bold text-gray-800">Intervalo</label>
+    <input 
+      type="date" 
+      id="startDate" 
+      [value]="startDate()" 
+      (input)="onStartDateChange($event)"
+      class="p-2 mr-2 border border-gray-300 rounded"
+    >
+    <input 
+      type="date" 
+      id="endDate" 
+      [value]="endDate()" 
+      (input)="onEndDateChange($event)"
+      class="p-2 mr-2 border border-gray-300 rounded"
+    >
+    <button (click)="clearFilters()" class="text-gray-700 mr-2 p-2 rounded cursor-pointer">Limpar</button>
+    <button (click)="onFilterByDateRange()" class="bg-purple-600 text-white-absolute py-2 px-4 rounded-xl cursor-pointer">Filtrar</button>
+  </div>
+
+  <table class="w-full border-collapse mb-5 rounded-lg overflow-hidden shadow-md">
+    <thead>
+      <tr>
+        <th class="p-3 font-bold text-left text-gray-800">Identificador</th>
+        <th class="p-3 font-bold text-left text-gray-800">Bairro</th>
+        <th class="p-3 font-bold text-left text-gray-800">Data do ocorrido</th>
+        <th class="p-3 font-bold text-left text-gray-800">Tipo de agressão</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let complaint of complaints() | slice:(currentPage()-1)*rowsPerPage():currentPage()*rowsPerPage(); index as i" (click)="viewDetails(complaint.id)" class="transition-colors duration-200 hover:bg-gray-200 cursor-pointer">
+        <td class="p-3 border-gray-300 text-gray-700">{{ complaint.id }}</td>
+        <td class="p-3 border-gray-300 text-gray-700">{{ complaint.neighborhood }}</td>
+        <td class="p-3 border-gray-300 text-gray-700">{{ complaint.date | date: 'dd/MM/yy' }}</td>
+        <td class="p-3 border-gray-300 text-gray-700">
+          <span class="inline-block p-1 px-2 bg-purple-200 text-white rounded-full text-xs text-blue-900">{{ complaint.type }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex justify-center items-center">
+    <button (click)="prevPage()" [disabled]="currentPage() === 1" class="border border-gray-300 rounded bg-white cursor-pointer mx-1 px-3 py-1 disabled:opacity-50">
+      &lt;
+    </button>
+    <ng-container *ngFor="let page of getPageNumbers()">
+      <ng-container *ngIf="page === currentPage()">
+        <span class="font-bold mx-2 text-white bg-purple-600 px-3 py-1 rounded">{{ page }}</span>
+      </ng-container>
+      <ng-container *ngIf="page !== currentPage()">
+        <button (click)="currentPage.set(page); loadComplaints()" class="border border-gray-300 rounded bg-white cursor-pointer mx-1 px-3 py-1">
+          {{ page }}
+        </button>
+      </ng-container>
+      <ng-container *ngIf="page === totalPages() && currentPage() < totalPages() - 2">
+        <button (click)="currentPage.set(page); loadComplaints()" class="border border-gray-300 rounded bg-white cursor-pointer mx-1 px-3 py-1">
+          ...
+        </button>
+      </ng-container>
+    </ng-container>
+    <button (click)="nextPage()" [disabled]="currentPage() === totalPages()" class="border border-gray-300 rounded bg-white cursor-pointer mx-1 px-3 py-1 disabled:opacity-50">
+      &gt;
+    </button>
+  </div>
+</div>
