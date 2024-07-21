@@ -35,4 +35,4 @@ test-frontend:
 up-dockerfile-frontend:
 	cd front && \
 	docker build -t front-complaints . && \
-	docker run -p 3000:3000 front-complaints
+	docker run -p 8000:80 front-complaints
