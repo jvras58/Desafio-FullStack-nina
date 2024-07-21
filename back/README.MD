@@ -81,36 +81,12 @@ pip install -r requirements.txt
 
 Após isso, o projeto estará pronto para ser iniciado com o comando:
 ```sh
-make run 
+make up-back-end 
 ```
-
-<!-- FIXME: AINDA É NECESSARIO IMPLEMENTAR O dockerfile do back e front e o compose para rodar os dois -->
-<!-- FIXME: AINDA É NECESSARIO IMPLEMENTAR O MAKE -->
-### Configurações com Docker (volte para pasta principal [Desafio-FullStack-nina] )
-
-É obrigatório ter o Docker Engine já instalado e configurado. Para mais informações de como instalar o Docker Engine em seu sistema operacional, consulte:
-
-- [Instruções para instalação do Docker Engine](https://docs.docker.com/engine/install/)
-
-#### Principais Comandos
-
-##### Subir o Compose
-
-```sh
-docker compose up
-```
-
-##### Executar as Migrações do Alembic
-> **Nota:** Para entrar em um container Docker de forma interativa, você pode usar o seguinte comando:
-```sh
-docker exec -it <nome_container> /bin/bash
-```
-
-Dentro do container, execute:
 
 ##### Executar Testes
 ```sh
-make test
+make test-backend
 ```
 
 # Lista de Atividades 

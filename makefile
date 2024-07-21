@@ -5,9 +5,6 @@ up:
 	gnome-terminal -- make up-frontend
 
 
-compose:
-	docker-compose up
-
 up-backend:
 	cd back && \
 	pip install -r requirements.txt && \
@@ -26,4 +23,3 @@ up-frontend:
 	cd front && \
 	npm i && \
 	npm start
-
