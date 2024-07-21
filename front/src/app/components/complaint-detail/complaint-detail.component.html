@@ -1,0 +1,62 @@
+<h1 class="text-xl ml-32 mt-8 flex items-center space-x-2 cursor-pointer" (click)="goBack()">
+  <svg class="h-6 w-6 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+    <path d="M15 7L10 12L15 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span class="font-bold">Ocorrência ID{{ complaint.id }} - {{ complaint.date | date: 'dd/MM/yy' }}</span>
+</h1>
+
+
+
+<div *ngIf="complaint" class="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-md space-y-4 mt-8">
+
+
+  <div class="flex space-x-4">
+    <div>
+      <label class="block text-sm">Ocorreu em</label>
+      <input type="text" [value]="complaint.date | date: 'dd/MM/yy - HH:mm'" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm text-center" disabled>
+    </div>
+    <div>
+      <label class="block text-sm">Data do registro</label>
+      <input type="text" [value]="complaint.created_at | date: 'dd/MM/yy - HH:mm'" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm text-center" disabled>
+    </div>
+  </div>
+  
+
+  <div class="bg-primary-extralight p-4 rounded-lg">
+    <h3 class="text-lg font-semibold mb-3">Detalhes</h3>
+    <div class="grid grid-cols-5 gap-1">
+      <div>
+        <label class="block text-sm font-semibold">SITUAÇÃO</label>
+        <p>{{ complaint.situation }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold">GÊNERO</label>
+        <p>{{ complaint.User.gender }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold">ETNIA</label>
+        <p>{{ complaint.User.ethnicity }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold">IDADE</label>
+        <p>{{ complaint.User.ageAtComplaint }} anos</p>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold">BAIRRO</label>
+        <p>{{ complaint.neighborhood }}</p>
+      </div>
+    </div>
+    
+    <div class="mt-4 ">
+      <label class="block text-sm font-semibold mb-2">RELATO</label>
+      <div class=" p-4 bg-white-absolute rounded-lg shadow-md">
+        <p>{{ complaint.description }}</p>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <label class="block text-sm font-semibold  rounded-full mb-2">Tipo de agressão</label>
+      <span class="badge font-bold inline-block p-1 px-2 bg-primary-light text-primary rounded-full text-xs">{{ complaint.type }}</span>
+    </div>
+  </div>
+</div>
