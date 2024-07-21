@@ -27,12 +27,3 @@ up-frontend:
 	npm i && \
 	npm start
 
-test-frontend:
-	cd front && \
-	npm i && \
-	npm test
-
-up-dockerfile-frontend:
-	cd front && \
-	docker build -t front-complaints . && \
-	docker run -p 3000:3000 front-complaints
