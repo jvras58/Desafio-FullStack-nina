@@ -1,30 +1,28 @@
-
-<!-- dashboard component -->
-<div class="justify-center">
+<div class="flex justify-center">
   <app-dashboard></app-dashboard>
 </div>
 
 <div class="container mx-auto px-5 py-5 max-w-6xl font-sans">
-  <h1 class="text-2xl mb-5">Ocorrências</h1>
+  <h1 class="text-black font-bold text-2xl mb-5">Ocorrências</h1>
 
-  <div class="flex items-center mb-5">
+  <div class="flex flex-wrap items-center mb-5 p-4 border border-gray-300 rounded-lg shadow-md">
     <label for="dateRange" class="mr-2 font-bold text-gray-800">Intervalo</label>
     <input 
       type="date" 
       id="startDate" 
       [value]="startDate()" 
       (input)="onStartDateChange($event)"
-      class="p-2 mr-2 border border-gray-300 rounded"
+      class="p-2 mr-2 mb-2 sm:mb-0 border border-gray-300 rounded-lg"
     >
     <input 
       type="date" 
       id="endDate" 
       [value]="endDate()" 
       (input)="onEndDateChange($event)"
-      class="p-2 mr-2 border border-gray-300 rounded"
+      class="p-2 mr-2 mb-2 sm:mb-0 border border-gray-300 rounded-lg"
     >
-    <button (click)="clearFilters()" class="text-gray-700 mr-2 p-2 rounded cursor-pointer">Limpar</button>
-    <button (click)="onFilterByDateRange()" class="bg-purple-600 text-white-absolute py-2 px-4 rounded-xl cursor-pointer">Filtrar</button>
+    <button (click)="clearFilters()" class="text-gray-700 mr-2 p-2 mb-2 sm:mb-0 rounded-lg cursor-pointer">Limpar</button>
+    <button (click)="onFilterByDateRange()" class="bg-[#5B43D9] text-white-absolute py-2 px-4 rounded-lg cursor-pointer">Filtrar</button>
   </div>
 
   <table class="w-full border-collapse mb-5 rounded-lg overflow-hidden shadow-md">
@@ -37,7 +35,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let complaint of complaints() | slice:(currentPage()-1)*rowsPerPage():currentPage()*rowsPerPage(); index as i" (click)="viewDetails(complaint.id)" class="transition-colors duration-200 hover:bg-gray-200 cursor-pointer">
+      <tr *ngFor="let complaint of complaints() | slice:(currentPage()-1)*rowsPerPage():currentPage()*rowsPerPage(); index as i" (click)="viewDetails(complaint.id)" class="transition-colors duration-200 hover:bg-gray-200 cursor-pointer even:bg-gray-100 odd:bg-white">
         <td class="p-3 border-gray-300 text-gray-700">{{ complaint.id }}</td>
         <td class="p-3 border-gray-300 text-gray-700">{{ complaint.neighborhood }}</td>
         <td class="p-3 border-gray-300 text-gray-700">{{ complaint.date | date: 'dd/MM/yy' }}</td>
@@ -54,7 +52,7 @@
     </button>
     <ng-container *ngFor="let page of getPageNumbers()">
       <ng-container *ngIf="page === currentPage()">
-        <span class="font-bold mx-2 text-white bg-purple-600 px-3 py-1 rounded">{{ page }}</span>
+        <span class="font-bold mx-2 text-white-absolute bg-purple-600 px-3 py-1 rounded">{{ page }}</span>
       </ng-container>
       <ng-container *ngIf="page !== currentPage()">
         <button (click)="currentPage.set(page); loadComplaints()" class="border border-gray-300 rounded bg-white cursor-pointer mx-1 px-3 py-1">

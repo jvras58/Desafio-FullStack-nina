@@ -1,14 +1,12 @@
-<div class="w-[552px] h-[411px] bg-white p-8 rounded-lg shadow-lg">
-    <h2 class="text-black font-bold text-xl">Faixa etária</h2>
-    <div class="w-full mx-auto mt-8">
+<div class="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl h-[411px] bg-white p-8 rounded-lg shadow-lg">
+  <h2 class="text-black font-bold text-xl">Faixa etária</h2>
+  <div class="w-full mx-auto mt-8">
       <canvas baseChart
-      [datasets]="barChartData.datasets"
-      [labels]="barChartData.labels"
-      [options]="barChartOptions"
-      [legend]="barChartLegend"
-      [type]="barChartType">
-    </canvas>
-    
-    </div>
+          [datasets]="barChartData.datasets"
+          [labels]="barChartData.labels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [type]="barChartType">
+      </canvas>
   </div>
-  
+</div>
