@@ -1,27 +1,53 @@
-# FrontNina
+# Plataforma NiNa
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
+<div align="center">
+  <img src="https://portal.ninamob.com/assets/images/nina-logo.svg" alt="Logo da Plataforma NiNa" width="120px" height="120px"/>
+</div>
 
-## Development server
+## Sobre o Projeto
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+A Plataforma NiNa é uma solução inovadora desenvolvida para desenvolver um sistema integrado para a gestão de reclamações(complaints) Este projeto utiliza tecnologias de ponta, incluindo Angular, Charts.js, TailwindCSS, e muito mais, para oferecer uma experiência de usuário excepcional e funcionalidades robustas.
 
-## Code scaffolding
+## Começando
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Pré-requisitos
 
-## Build
+- Node.js (inclui npm): [Como instalar o Node.js e o npm](https://nodejs.org/)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Configuração Local
 
-## Running unit tests
+1. **Clone o repositório**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+git clone https://github.com/jvras58/Desafio-FullStack-nina.git
+cd Desafio-FullStack-nina
+cd front
+```
 
-## Running end-to-end tests
+2. **Instale as dependências**
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm install
+```
 
-## Further help
+3. **Inicie o projeto localmente**
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm start
+```
+
+   Acesse `http://localhost:4200/` no seu navegador para visualizar o projeto.
+
+
+### Iniciando com o make:
+
+**Nota: na raiz do projeto execute o comando**
+```bash
+npm up-frontend
+```
+
+### Lista de tarefas do desafio full-stack Nina
+
+Este projeto é uma applicação web que implementa duas telas front-end seguindo o modelo disponibilizado em [design](https://www.figma.com/design/oosvhfSMv6OsCDCW27NWQ0/Processo-seletivo---2024?node-id=0-1&t=qbuEQHZKt86TTp7j-1)
+
+- [planilha](lista-tarefas.md)

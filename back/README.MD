@@ -81,42 +81,18 @@ pip install -r requirements.txt
 
 Após isso, o projeto estará pronto para ser iniciado com o comando:
 ```sh
-make run 
+make up-back-end 
 ```
-
-<!-- FIXME: AINDA É NECESSARIO IMPLEMENTAR O dockerfile do back e front e o compose para rodar os dois -->
-<!-- FIXME: AINDA É NECESSARIO IMPLEMENTAR O MAKE -->
-### Configurações com Docker (volte para pasta principal [Desafio-FullStack-nina] )
-
-É obrigatório ter o Docker Engine já instalado e configurado. Para mais informações de como instalar o Docker Engine em seu sistema operacional, consulte:
-
-- [Instruções para instalação do Docker Engine](https://docs.docker.com/engine/install/)
-
-#### Principais Comandos
-
-##### Subir o Compose
-
-```sh
-docker compose up
-```
-
-##### Executar as Migrações do Alembic
-> **Nota:** Para entrar em um container Docker de forma interativa, você pode usar o seguinte comando:
-```sh
-docker exec -it <nome_container> /bin/bash
-```
-
-Dentro do container, execute:
 
 ##### Executar Testes
 ```sh
-make test
+make test-backend
 ```
 
 # Lista de Atividades 
 
 ## Atividades Pendentes Backend
-- [ ] Implementar um recurso ausente que retorne todas as reclamações de um determinado usuário.
+- [v] Implementar um recurso ausente que retorne todas as reclamações de um determinado usuário.
 
 
 ## Atividades Concluídas Backend
@@ -132,15 +108,14 @@ make test
 - [v] Refatore a rota get_complaint (```/complaint/{complaint_id}```) para que a reclamação retornada inclua informações sobre o usuário que a registrou. 
 > **Nota:** será necessário para integração com a tabela de complaints(reclamações) no frontend
 
-> **Comentario 1:** Foi adicionado um parametro UserSchema opcional no schema de  complaints(reclamações) para que o response_model se adeque ao que foi solicitado
+> **Comentario:** Foi adicionado um parametro UserSchema opcional no schema de  complaints(reclamações) para que o response_model se adeque ao que foi solicitado
 
-> **Comentario 2:** talvez seja necessario refatorar para que a logica de junção complaint e usuário fiquem no proprio controller get_complaint
 
 ## Atividades Extras 
 
-- [ ] Dockerfile
+- [v] Dockerfile
 
 - [v] testes back-end (usando pytest)
 > **Nota de Implementação:** Durante o desenvolvimento, infrentei um desafio relacionado à configuração do ambiente de desenvolvimento com FastAPI. A execução do servidor de desenvolvimento utilizando o comando `fastapi dev app.py` ou `fastapi dev back/app.py` resultava em impossibilidade na execução dos testes do pytest. Isso ocorreu porque o comando `fastapi dev` exige que os caminhos dos módulos sejam especificados de uma forma (por exemplo, `from back.router import users, complaints`), enquanto o `pytest` requer uma estrutura de importação diferente (ou seja, `from routers import users, complaints`). Para resolver essa incompatibilidade e garantir a integridade dos testes, optamos por utilizar o `uvicorn` para iniciar o servidor de desenvolvimento, com o comando `uvicorn app:app --reload --host 0.0.0.0`. Essa abordagem me permitiu manter os testes enquanto desenvolvíamos com FastAPI.
 
-- [ ] adicionar o coverage (pytest-cov)
+- [v] adicionar o coverage (pytest-cov)

@@ -1,0 +1,39 @@
+<div class="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl h-[411px] bg-[#5B43D9] p-8 rounded-lg shadow-lg">
+    <h2 class="text-white-absolute font-poppins text-base font-semibold">Momento do relato</h2>
+    <div class="flex justify-around">
+        <div class="w-full mx-auto mt-8 relative">
+            <canvas baseChart
+                [data]="chartData1"
+                [options]="chartOptions"
+                [type]="'doughnut'"
+                class="w-52 h-52">
+            </canvas>
+            <div *ngIf="chartData1?.datasets?.[0]?.data?.[0] !== undefined" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
+                <div class="text-2xl text-white-absolute">{{ chartData1.datasets[0].data[0].toFixed(1) }}%</div>
+                <div class="text-white-absolute font-poppins text-base font-semibold">No momento</div>
+            </div>
+            <div *ngIf="chartData1?.datasets?.[0]?.data?.[0] === undefined" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
+                <div class="text-2xl">Carregando...</div>
+            </div>
+        </div>
+        <div class="w-full mx-auto mt-8 relative">
+            <canvas baseChart
+                [data]="chartData2"
+                [options]="chartOptions"
+                [type]="'doughnut'"
+                class="w-52 h-52">
+            </canvas>
+            <div *ngIf="chartData2?.datasets?.[0]?.data?.[0] !== undefined" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
+                <div class="text-2xl text-white-absolute">{{ chartData2.datasets[0].data[0].toFixed(1) }}%</div>
+                <div class="text-white-absolute font-poppins text-base font-semibold leading-6 tracking-wide">Após o ocorrido</div>
+            </div>
+            <div *ngIf="chartData2?.datasets?.[0]?.data?.[0] === undefined" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
+                <div class="text-2xl">Carregando...</div>
+            </div>
+        </div>
+    </div> 
+    <div class="flex justify-center space-x-2 mt-4">
+        <button class="text-white-absolute cursor-pointer px-3 py-1" (click)="prevPage()"><</button>
+        <button class="text-white-absolute cursor-pointer px-3 py-1" (click)="nextPage()">></button>
+    </div>
+</div>

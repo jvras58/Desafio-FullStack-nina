@@ -5,9 +5,6 @@ up:
 	gnome-terminal -- make up-frontend
 
 
-compose:
-	docker-compose up
-
 up-backend:
 	cd back && \
 	pip install -r requirements.txt && \
@@ -15,7 +12,7 @@ up-backend:
 
 test-backend:
 	cd back && \
-	pytest
+	coverage run -m pytest && coverage report && coverage html
 
 up-dockefile-backend:
 	cd back && \
