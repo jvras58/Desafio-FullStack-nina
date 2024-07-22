@@ -2,7 +2,7 @@
 # Projeto de Gestão de Reclamações
 
 <div align="center">
-    <img src="https://pbs.twimg.com/profile_images/575314188848889856/F4KWmvVX_200x200.png" alt="Logo do Projeto de Gestão de Reclamações" width="200" height="200">
+  <img src="https://portal.ninamob.com/assets/images/nina-logo.svg" alt="Logo da Plataforma NiNa" width="120px" height="120px"/>
 </div>
 <h2 align="center">Gestão de Reclamações</h2>
 
@@ -25,27 +25,46 @@ A aplicação é uma solução web que inclui duas interfaces de usuário front-
 | **Devtime** | charts.js  | Última   |
 |             | FastAPI    | v0.111.x |
 
+
 ## 🛠️ Configuração e Execução
 
-Para executar a aplicação localmente, siga os passos a seguir. Assegure-se de ter todas as dependências instaladas.
+Para rodar a aplicação localmente e garantir uma experiência completa, siga os passos abaixo. Certifique-se de ter instalado todas as dependências necessárias.
 
-1. Clone o repositório para sua máquina local.
-2. Na raiz do projeto, execute o comando abaixo para iniciar a aplicação:
+### Clonando o Repositório
+
+1. Clone o repositório para sua máquina local usando o comando:
 
 ```sh
-make up
+git clone https://github.com/jvras58/Desafio-FullStack-nina.git
 ```
+
+### Iniciando a Aplicação
+
+2. Com o repositório clonado, navegue até a raiz do projeto e execute o seguinte comando para iniciar a interface da aplicação:
+   ```sh
+   make up-frontend 
+   ```
+   > **Nota:** A API já está disponível online no [Render](https://desafio-fullstack-nina.onrender.com/), o que torna desnecessário iniciar o back-end localmente para testar a aplicação. No entanto, se preferir utilizar a API localmente, siga as instruções para [iniciar a API](#iniciando-a-api).
+
+### Iniciando a API (Opcional)
+
+3. Para iniciar a API localmente, utilize o comando:
+   ```sh
+   make up-backend
+   ```
+   > **Aviso:** Para utilizar a API localmente, altere a string de conexão no arquivo [environment.development.ts](front/src/environments/environment.development.ts) para: `http://0.0.0.0:8000`
 
 ## 🛠️ Testes da API
 
 Para executar os testes da API, utilize o comando:
-
 ```sh
 make test-backend
 ```
 
 ## 🚀 Outros Comandos com o Make
 
-Para mais informações sobre outros comandos disponíveis via `make`, consulte:
+Para explorar mais comandos disponíveis via `make`, consulte o arquivo [Instruções do Make](make-file.md).
 
-[Instruções do Make](make-file.md)
+## 🛠️ Este projeto faz parte de um desafio gerenciado pela Nina
+
+consulte o arquivo [Instruções do Nina](desafios.md).

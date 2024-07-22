@@ -12,7 +12,7 @@ up-backend:
 
 test-backend:
 	cd back && \
-	pytest
+	coverage run -m pytest && coverage report && coverage html
 
 up-dockefile-backend:
 	cd back && \
