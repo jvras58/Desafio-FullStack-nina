@@ -3,11 +3,12 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 import { GeneroChartComponent } from '../genero-chart/genero-chart.component';
 import { TiposAgressaoComponent } from '../tipos-agressao/tipos-agressao.component';
 import { AgeRangeChartComponent } from '../age-range-chart/age-range-chart.component';
+import { ChartPaginationComponent } from "../paginacao-charts/chart-pagination.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [AgeRangeChartComponent, TiposAgressaoComponent, GeneroChartComponent],
+  imports: [AgeRangeChartComponent, TiposAgressaoComponent, GeneroChartComponent, ChartPaginationComponent],
   templateUrl: './dashboard.component.html',
   styles: ``
 })

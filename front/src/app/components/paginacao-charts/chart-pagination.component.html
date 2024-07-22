@@ -1,0 +1,14 @@
+<div class="carousel">
+  <div class="carousel-content" [ngSwitch]="currentIndex">
+    <app-doughnut-chart *ngSwitchCase="0" (prev)="prevPage()" (next)="nextPage()"></app-doughnut-chart>
+    <app-line-chart *ngSwitchCase="1" (prev)="prevPage()" (next)="nextPage()"></app-line-chart>
+    <app-bar-chart *ngSwitchCase="2" (prev)="prevPage()" (next)="nextPage()"></app-bar-chart>
+  </div>
+  <div class="pagination">
+    <div class="dots">
+      <span *ngFor="let i of [].constructor(totalPages); let idx = index" 
+            (click)="goToPage(idx)" 
+            [class.active]="idx === currentIndex">
+      </span>
+  </div>
+</div>

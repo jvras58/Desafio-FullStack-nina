@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
   selector: 'app-genero-chart',
@@ -37,35 +37,33 @@ export class GeneroChartComponent implements OnInit {
   public barChartData: ChartData<'bar'> = {
     labels: this.barChartLabels,
     datasets: [
-      { data: [], label: 'Cisgênero', backgroundColor: 'rgba(75, 0, 130, 0.8)' },
-      { data: [], label: 'Transgênero', backgroundColor: 'rgba(186, 85, 211, 0.6)' },
+      { data: [], label: 'Cisgênero', backgroundColor: 'rgba(91, 67, 217, 1)'},
+      { data: [], label: 'Transgênero', backgroundColor: 'rgba(151, 134, 242, 1)'},
     ]
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private dashboardService: DashboardService) {}
   
-  // TODO: Refactor : criar um service para buscar os dados da API
   ngOnInit(): void {
-    this.http.get<{ [key: string]: number }>('https://desafio-fullstack-nina.onrender.com/complaints/group/genders')
-      .subscribe({
-        next: data => {
-          const cisgenderData = [data['CIS_FEMALE'], data['CIS_MALE'], data['OTHER']];
-          const transgenderData = [data['TRANS_FEMALE'], data['TRANS_MALE'], data['OTHER']];
-          const maxDataValue = Math.max(...cisgenderData, ...transgenderData) + 10;
-  
-          this.barChartOptions.scales!['y']!.max = maxDataValue;
+    this.dashboardService.getGenderGroupData().subscribe({
+      next: data => {
+        const cisgenderData = [data['CIS_FEMALE'], data['CIS_MALE'], data['OTHER']];
+        const transgenderData = [data['TRANS_FEMALE'], data['TRANS_MALE'], data['OTHER']];
+        const maxDataValue = Math.max(...cisgenderData, ...transgenderData) + 10;
 
-          this.barChartData = {
-            labels: this.barChartLabels,
-            datasets: [
-              { data: cisgenderData, label: 'Cisgênero', backgroundColor: 'rgba(75, 0, 130, 0.8)' },
-              { data: transgenderData, label: 'Transgênero', backgroundColor: 'rgba(186, 85, 211, 0.6)' },
-            ]
-          };
-        },
-        error: error => {
-          console.error('Erro ao buscar os dados da API:', error);
-        }
-      });
+        this.barChartOptions.scales!['y']!.max = maxDataValue;
+
+        this.barChartData = {
+          labels: this.barChartLabels,
+          datasets: [
+            { data: cisgenderData, label: 'Cisgênero', backgroundColor: 'rgba(91, 67, 217, 1)' },
+            { data: transgenderData, label: 'Transgênero', backgroundColor: 'rgba(151, 134, 242, 1)' },
+          ]
+        };
+      },
+      error: error => {
+        console.error('Erro ao buscar os dados da API:', error);
+      }
+    });
   }
 }

@@ -1,0 +1,15 @@
+<div class="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl h-411 bg-[#5B43D9] p-8 rounded-lg shadow-lg">
+    <h2 class="text-white-absolute font-poppins text-base font-semibold">Ranking de Bairros</h2>
+    <div class="w-full mx-auto mt-8 relative">
+        <canvas baseChart
+            [data]="chartData"
+            [options]="chartOptions"
+            [type]="'bar'"
+            class="w-52 h-52">
+        </canvas>
+    </div> 
+    <div class="flex justify-center space-x-2 mt-4">
+        <button class="text-white-absolute cursor-pointer px-3 py-1" (click)="prevPage()"><</button>
+        <button class="text-white-absolute cursor-pointer px-3 py-1" (click)="nextPage()">></button>
+    </div>
+</div>

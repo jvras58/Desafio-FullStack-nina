@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
   selector: 'app-tipos-agressao',
@@ -11,9 +11,8 @@ import { BaseChartDirective } from 'ng2-charts';
   imports: [BaseChartDirective]
 })
 export class TiposAgressaoComponent implements OnInit {
-
   public barChartOptions: ChartOptions<'bar'> = {
-    indexAxis: 'y', 
+    indexAxis: 'y',
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -48,6 +47,7 @@ export class TiposAgressaoComponent implements OnInit {
 
   public barChartLabels: string[] = [];
   public barChartType: 'bar' = 'bar';
+  // public barChartType: ChartType = 'bar';
   public barChartLegend = false;
 
   public barChartData: ChartData<'bar'> = {
@@ -59,19 +59,18 @@ export class TiposAgressaoComponent implements OnInit {
     }]
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
-    this.http.get<{ [key: string]: number }>('https://desafio-fullstack-nina.onrender.com/complaints/group/types')
-      .subscribe({
-        next: data => {
-          this.barChartLabels = Object.keys(data);
-          this.barChartData.labels = this.barChartLabels;
-          this.barChartData.datasets[0].data = Object.values(data);
-        },
-        error: error => {
-          console.error('Erro ao buscar os dados da API:', error);
-        }
-      });
+    this.dashboardService.getAggressionTypesData().subscribe({
+      next: data => {
+        this.barChartLabels = Object.keys(data);
+        this.barChartData.labels = this.barChartLabels;
+        this.barChartData.datasets[0].data = Object.values(data);
+      },
+      error: error => {
+        console.error('Erro ao buscar os dados da API:', error);
+      }
+    });
   }
 }
