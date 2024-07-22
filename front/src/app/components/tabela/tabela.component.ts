@@ -13,7 +13,6 @@ import { DashboardComponent } from "../dashboard/dashboard.component";
   selector: 'app-tabela',
   standalone: true,
   templateUrl: './tabela.component.html',
-  styleUrls: ['./tabela.component.scss'],
   imports: [FormsModule, CommonModule, NgForOf, AgeRangeChartComponent, DashboardComponent],
   styles: [`
     :host ::ng-deep .table td { vertical-align: top; padding: 0.5rem; }

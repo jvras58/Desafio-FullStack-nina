@@ -7,7 +7,6 @@ import { DashboardService } from '../../dashboard/dashboard.service';
   selector: 'app-genero-chart',
   templateUrl: './genero-chart.component.html',
   standalone: true,
-  styleUrls: ['./genero-chart.component.scss'],
   imports: [BaseChartDirective]
 })
 export class GeneroChartComponent implements OnInit {

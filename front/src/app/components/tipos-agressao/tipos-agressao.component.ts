@@ -6,7 +6,6 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 @Component({
   selector: 'app-tipos-agressao',
   templateUrl: './tipos-agressao.component.html',
-  styleUrls: ['./tipos-agressao.component.scss'],
   standalone: true,
   imports: [BaseChartDirective]
 })

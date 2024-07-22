@@ -12,7 +12,7 @@ import { GeneroChartComponent } from "./components/genero-chart/genero-chart.com
   standalone: true,
   imports: [RouterOutlet, FormsModule, TabelaComponent, HeaderLogoComponent, AgeRangeChartComponent, TiposAgressaoComponent, DashboardComponent, GeneroChartComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+
 })
 export class AppComponent {
   title = 'front-nina';
