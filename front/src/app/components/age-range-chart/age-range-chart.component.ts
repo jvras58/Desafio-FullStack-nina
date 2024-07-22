@@ -7,7 +7,6 @@ import { DashboardService } from '../../dashboard/dashboard.service';
   selector: 'app-age-range-chart',
   templateUrl: './age-range-chart.component.html',
   standalone: true,
-  styleUrls: ['./age-range-chart.component.scss'],
   imports: [BaseChartDirective]
 })
 export class AgeRangeChartComponent implements OnInit {
